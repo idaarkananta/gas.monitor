@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Factory Gas Level Monitoring</title>
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --primary-dark: #2980b9;
+      --bg-color: #f4f6f9;
+      --header-color: #2c3e50;
+      --text-color: #333;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 0;
+      color: var(--text-color);
+    }
+
+    header {
+      background-color: var(--header-color);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 10px;
+      font-size: 32px;
+    }
+
+    header p {
+      margin: 5px 0;
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .refresh-button {
+      display: inline-block;
+      margin: 10px 8px;
+      padding: 12px 24px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .refresh-button:hover {
+      background-color: var(--primary-dark);
+      transform: scale(1.05);
+    }
+
+    .button-group {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 20px;
+      padding: 30px;
+      max-width: 1000px;
+      margin: auto;
+      justify-content: center;
+    }
+
+    iframe {
+      width: 450px;
+      height: 300px;
+      border: 1px solid #cccccc;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease;
+    }
+
+    iframe:hover {
+      transform: scale(1.01);
+    }
+
+    footer {
+      background-color: var(--header-color);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 500px) {
+      iframe {
+        width: 100%;
+        height: 250px;
+      }
+    }
+
+    @media print {
+      .refresh-button, footer {
+        display: none !important;
+      }
+
+      header {
+        padding-bottom: 0;
+      }
+
+      iframe {
+        page-break-inside: avoid;
+      }
+
+      body {
+        background-color: white;
+        color: black;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Factory Gas Level Monitoring</h1>
+    <p>Monitoring of 4 gas sensors in factory environment</p>
+    <p>Group 2 | M-EEN 2024-2 Class 1</p>
+  </header>
+
+  <div class="button-group">
+    <button class="refresh-button" onclick="refreshCharts()">🔄 Refresh Graph</button>
+    <button class="refresh-button" onclick="window.print()">🖨️ Cetak ke PDF</button>
+  </div>
+
+  <div class="container" id="chart-container">
+    <iframe src="https://thingspeak.com/channels/2916803/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Gas+1&type=line"></iframe>
+    <iframe src="https://thingspeak.com/channels/2916803/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Gas+2&type=line"></iframe>
+    <iframe src="https://thingspeak.com/channels/2916803/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Gas+3&type=line"></iframe>
+    <iframe src="https://thingspeak.com/channels/2916803/charts/4?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Gas+4&type=line"></iframe>
+  </div>
+
+  <footer>
+    &copy; 2025 Gas Level Monitoring | Final Semester Project
+  </footer>
+
+  <script>
+    function refreshCharts() {
+      const container = document.getElementById('chart-container');
+      const iframes = container.getElementsByTagName('iframe');
+      for (let iframe of iframes) {
+        const src = iframe.src;
+        iframe.src = src;
+      }
+    }
+  </script>
+
+</body>
+</html>
